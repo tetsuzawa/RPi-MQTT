@@ -1,6 +1,6 @@
 # coding: utf-8
 import paho.mqtt.client as mqtt
-import os, urllib
+from modules import led_flash
 
 CLOUD_MQTT_USERNAME = 'abmnbdsi'
 CLOUD_MQTT_PASSWORD = '8hQWowB4Wyod'
@@ -17,6 +17,14 @@ def on_connect(client, userdata, flags, respons_code):
  
 def on_message(client, userdata, msg):
     print(msg.topic+' '+str(msg.payload))
+    print(msg.payload)
+    print(type(msg.payload))
+    print(msg.payload.decode('utf-8'))
+    print(type(msg.payload.decode('utf-8')))
+    message = msg.payload.decode('utf-8')
+    if message == 'on':
+        led_flash.flash()
+
  
 client = mqtt.Client(protocol=mqtt.MQTTv311)
 print('1')
