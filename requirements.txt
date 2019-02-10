@@ -1,1 +1,10 @@
+Click==7.0
+Flask==1.0.2
+itsdangerous==1.1.0
+Jinja2==2.10
+MarkupSafe==1.1.0
+numpy==1.16.1
+paho-mqtt==1.4.0
 RPi.GPIO==0.6.5
+Werkzeug==0.14.1
+wiringpi==2.46.0
