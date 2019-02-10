@@ -1,7 +1,6 @@
 # coding: utf-8
 import paho.mqtt.client as mqtt
 import os
-from modules import led_flash
 from password.password import *
 
 client = mqtt.Client(protocol=mqtt.MQTTv311)
