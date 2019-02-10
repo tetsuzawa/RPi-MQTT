@@ -5,7 +5,7 @@ import os
 from modules import led_flash
 from password.password import *
 
-client = mqtt.Client()
+client = mqtt.Client(protocol=mqtt.MQTTv311)
 
 def pub_test():
 
