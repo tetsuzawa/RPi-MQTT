@@ -1,9 +1,6 @@
 import paho.mqtt.client as mqtt
  
-CLOUD_MQTT_USERNAME = "abmnbdsi"
-CLOUD_MQTT_PASSWORD = "m7C7GWvo4s43"
-CLOUD_MQTT_URL = "m16.cloudmqtt.com"
-CLOUD_MQTT_SSL_PORT = 27684
+from password.password import *
 
 
 def on_connect(client, userdata, rc):

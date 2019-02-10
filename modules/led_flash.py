@@ -2,10 +2,9 @@ import RPi.GPIO as GPIO
 import time
 
 def flash():
-    print("start flash")
         
     COUNT = 5
-    BCM_NUM = 19
+    BCM_NUM = 4
     GPIO.setmode(GPIO.BCM)  #GPIOへアクセスする番号をBCMの番号で指定することを宣言します。                        
     GPIO.setup(BCM_NUM, GPIO.OUT) #BCMの4番ピン、物理的には10番ピンを出力に設定します。                                
 
