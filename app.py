@@ -18,7 +18,7 @@ def picked_up():
     return np.random.choice(messages)
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     pub04.pub_main()
     return render_template('index.html')
@@ -47,5 +47,5 @@ if __name__ == '__main__':
     #app.run(host='192.168.0.81', port=8080)
     #app.run(host="localhost", port=8080)
     #app.run(host=process.env.PORT)
-    port = int(os.environ.get('PORT', 500))
+    port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
