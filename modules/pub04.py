@@ -4,7 +4,7 @@ import time
 import os, sys
 #path = os.path.join(os.path.dirname(__file__), '../')
 #sys.path.append(path)
-from password.password import *
+#from password.password import *
 
 client = mqtt.Client(protocol=mqtt.MQTTv311)
 client.tls_set('/etc/ssl/certs/ca-certificates.crt')
