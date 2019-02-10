@@ -4,7 +4,6 @@ import os
 from modules import led_flash
 from password.password import *
 
-client = mqtt.Client(protocol=mqtt.MQTTv311)
 
 def on_connect(client, userdata, flags, respons_code):
     print('Connected with result code '+str(respons_code))
@@ -18,8 +17,11 @@ def on_message(client, userdata, msg):
     print(msg.topic+' '+message)
     if message == 'on':
         led_flash.flash()
+    if message == 'test0':
+        led_flash.flash()
 
 def sub_main():
+    client = mqtt.Client(protocol=mqtt.MQTTv311)
     client.on_connect = on_connect
     client.on_message = on_message
 
