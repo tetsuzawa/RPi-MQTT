@@ -8,7 +8,7 @@ from password.password import *
 def pub_test():
 
     for _i in range(0,5):
-        client.publish('world/darai0512', 'test')
+        client.publish('control', 'test')
         time.sleep(1)
 
 

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import numpy as np
 import os
+from modules import pub04
 #from modules import led_flash
 
 app = Flask(__name__)
@@ -18,6 +19,7 @@ def picked_up():
 
 @app.route('/', methods=['GET'])
 def index():
+    pub04.pub_main()
     return render_template('index.html')
 
 
