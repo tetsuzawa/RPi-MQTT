@@ -22,6 +22,4 @@ def pub_main():
 
     pub_test()
  
-#client.loop_start()
-if __name__ == "__main__":
-    pub_main()
+client.loop_start()
