@@ -22,7 +22,7 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
-@app.route("/", methods=['GET'])
+@app.route("/", methods=['GET', 'POST'])
 def hello_world():
     return "hello world!"
 
@@ -47,10 +47,11 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    pub04.pub_main()
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
-        pub04.pub_main()
+        
 
 
 if __name__ == "__main__":
