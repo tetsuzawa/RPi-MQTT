@@ -16,7 +16,7 @@ def on_message(client, userdata, msg):
     message = msg.payload.decode('utf-8')
     #print(msg.topic+' '+str(msg.payload))
     print(msg.topic+' '+message)
-    if message == 'on':
+    if message == 'test0':
         led_flash.flash()
 
 def sub_main():

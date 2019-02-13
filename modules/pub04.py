@@ -17,13 +17,21 @@ client.connect(os.environ["CLOUD_MQTT_URL"], int(os.environ["CLOUD_MQTT_SSL_PORT
 
 def pub_test():
 
-    for i in range(0,5):
-        client.publish('control', 'test' + str(i))
-        time.sleep(1)
+    client.publish('control', 'on')
+    #for i in range(0,5):
+    #    client.publish('control', 'test' + str(i))
+    #    time.sleep(1)
+
+def pub_test02(line_message):
+
+    client.publish('control', line_message)
+    #for i in range(0,5):
+    #    client.publish('control', 'test' + str(i))
+    #    time.sleep(1)
 
 def pub_main():
 
-        pub_test()
+    pub_test02()
  
 #client.loop_start()
 if __name__ == "__main__":
