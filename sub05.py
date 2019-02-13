@@ -9,7 +9,8 @@ def on_connect(client, userdata, flags, respons_code):
     print('Connected with result code '+str(respons_code))
     print('Connected to cloudMQTT')
     #client.subscribe('isyjp/msg1st')
-    client.subscribe('control/#')
+    #client.subscribe('control/#')
+    client.subscribe('#')
 
 def on_message(client, userdata, msg):
     message = msg.payload.decode('utf-8')
@@ -19,6 +20,10 @@ def on_message(client, userdata, msg):
         led_flash.flash()
     if message == 'test0':
         led_flash.flash()
+    if message == 'yellow':
+        led_flash.flash_yellow()
+    if message == 'blue':
+        led_flash.flash_blue()
 
 def sub_main():
     client = mqtt.Client(protocol=mqtt.MQTTv311)
