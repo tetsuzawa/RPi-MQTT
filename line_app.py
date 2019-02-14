@@ -36,9 +36,9 @@ def callback():
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
     try:
-        print("\n\nbody type" + type(body))
-        print("\n\njson 1" + body.message)
-        print("\n\njson 2" + body.message)
+        print(type(body))
+        print(str(body.message))
+        print(body.message)
 
     except Exception as e:
         print(e)
@@ -56,10 +56,15 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     try:
-        print("\n\nevent" + event)
-        print("\n\nevent.message" + event.message)
+        print(event)
+        print("\n\nevent.message" + str(event.message))
     except Exception as e:
         print(e)
+    try:
+        print(str(event))
+    except Exception as e:
+        print(e)
+ 
     #pub04.pub_main()
     pub04.pub_test02(event.message.text)
     line_bot_api.reply_message(
