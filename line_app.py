@@ -37,8 +37,8 @@ def callback():
     app.logger.info("Request body: " + body)
     try:
         print(type(body))
-        print(str(body.message))
-        print(body.message)
+        print(str(body))
+        print(body)
 
     except Exception as e:
         print(e)
@@ -57,6 +57,7 @@ def callback():
 def handle_message(event):
     try:
         print(event)
+        print(type(event))
         print("\n\nevent.message" + str(event.message))
     except Exception as e:
         print(e)
