@@ -7,7 +7,7 @@ from linebot import (
     LineBotApi, WebhookHandler
 )
 from linebot.exceptions import (
-    InvalidSignatureError
+    InvalidSignatureError, LineBotApiError
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
@@ -35,6 +35,13 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
+    try:
+        app.logger.info("\n\nbody type" + type(body))
+        app.logger.info("\n\njson 1" + body.message)
+        app.logger.info("\n\njson 2" + body.message)
+
+    except:
+        pass
 
     # handle webhook body
     try:
@@ -47,6 +54,11 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    try:
+        app.logger.info("\n\nevent" + event)
+        app.logger.info("\n\nevent.message" + event.message)
+    except expression as identifier:
+        pass
     #pub04.pub_main()
     pub04.pub_test02(event.message.text)
     line_bot_api.reply_message(
