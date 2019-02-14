@@ -1,6 +1,7 @@
 # coding: utf-8
 import paho.mqtt.client as mqtt
 import os
+import re
 from modules import led_flash
 from password.password import *
 
@@ -16,13 +17,14 @@ def on_message(client, userdata, msg):
     message = msg.payload.decode('utf-8')
     #print(msg.topic+' '+str(msg.payload))
     print(msg.topic+' '+message)
-    if message == 'on':
+
+    if message == re_compile('on'):
         led_flash.flash()
-    if message == 'test0':
+    if message == re_compile('test0'):
         led_flash.flash()
-    if message == 'yellow':
+    if message == re_compile('yellow'):
         led_flash.flash_yellow()
-    if message == 'blue':
+    if message == re_compile('blue'):
         led_flash.flash_blue()
 
 def sub_main():
@@ -34,6 +36,10 @@ def sub_main():
     client.username_pw_set(CLOUD_MQTT_USERNAME, CLOUD_MQTT_PASSWORD)
     client.connect(CLOUD_MQTT_URL, CLOUD_MQTT_SSL_PORT, keepalive=60)
     client.loop_forever()
+
+def re_compile(text):
+    text = re.compile(r'%s\s*'%text, re.I)
+    return text
 
 if __name__ == '__main__':
     sub_main()
