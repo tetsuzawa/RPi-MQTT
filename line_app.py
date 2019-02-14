@@ -57,7 +57,7 @@ def handle_message(event):
     try:
         app.logger.info("\n\nevent" + event)
         app.logger.info("\n\nevent.message" + event.message)
-    except expression as identifier:
+    except:
         pass
     #pub04.pub_main()
     pub04.pub_test02(event.message.text)
