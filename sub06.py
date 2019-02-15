@@ -2,9 +2,14 @@
 import paho.mqtt.client as mqtt
 import os
 import re
+from os.path import join, dirname
+from dotenv import load_dotenv
+
 from modules import led_flash
 from password.password import *
 
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 def on_connect(client, userdata, flags, respons_code):
     print('Connected with result code '+str(respons_code))
@@ -18,6 +23,7 @@ def on_message(client, userdata, msg):
     #print(msg.topic+' '+str(msg.payload))
     print(msg.topic+' '+message)
 
+"""
     if message == re_compile('on'):
         led_flash.flash()
     if message == re_compile('test0'):
@@ -25,6 +31,15 @@ def on_message(client, userdata, msg):
     if message == re_compile('yellow'):
         led_flash.flash_yellow()
     if message == re_compile('blue'):
+        led_flash.flash_blue()
+"""
+    if message == 'on':
+        led_flash.flash()
+    if message == 'test0':
+        led_flash.flash()
+    if message == 'yellow':
+        led_flash.flash_yellow()
+    if message == 'blue':
         led_flash.flash_blue()
 
 def sub_main():
@@ -36,7 +51,7 @@ def sub_main():
     #client.username_pw_set(CLOUD_MQTT_USERNAME, CLOUD_MQTT_PASSWORD)
     client.username_pw_set(os.environ["CLOUD_MQTT_USERNAME"], os.environ["CLOUD_MQTT_PASSWORD"])
     #client.connect(CLOUD_MQTT_URL, CLOUD_MQTT_SSL_PORT, keepalive=60)
-    client.connect(os.environ["CLOUD_MQTT_URL"], os.environ["CLOUD_MQTT_SSL_PORT"], keepalive=60)
+    client.connect(os.environ["CLOUD_MQTT_URL"], int(os.environ["CLOUD_MQTT_SSL_PORT"]), keepalive=60)
     client.loop_forever()
 
 def re_compile(text):
