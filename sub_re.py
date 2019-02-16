@@ -37,9 +37,9 @@ def on_message(client, userdata, msg):
         led_flash.flash()
     if message == 'test0':
         led_flash.flash()
-    if message == 'yellow':
+    if message == r'yellow%s\s*':
         led_flash.flash_yellow()
-    if message == 'blue':
+    if message == r'blue%s\s*':
         led_flash.flash_blue()
 
 def sub_main():
