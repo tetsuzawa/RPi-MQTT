@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 class Flash:
-    def ___init__(self, COUNT, BCM_NUM):
+    def __init__(self, COUNT, BCM_NUM):
 
         self.count = COUNT
         self.bcm_num = BCM_NUM
@@ -21,6 +21,9 @@ class Flash:
 
         except KeyboardInterrupt:
             GPIO.cleanup()
+
+    def __del__(self):
+        GPIO.cleanup()
 
 if __name__ == '__main__':
     flash()

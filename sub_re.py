@@ -23,7 +23,7 @@ def on_message(client, userdata, msg):
     print(msg.topic+' '+message)
     
     blue = led_flash_class(COUNT=5, BCM_NUM=13)
-    yellow = led_flash_class(COUNT=5, BCM_NUM=15)
+    yellow = led_flash_class(COUNT=5, BCM_NUM=19)
 
     if message == 'on':
         led_flash.flash_yellow()
@@ -35,6 +35,9 @@ def on_message(client, userdata, msg):
     if message == 'blue':
         #led_flash.flash_blue()
         blue.flash()
+
+    del blue
+    del yellow
 
 def sub_main():
     client = mqtt.Client(protocol=mqtt.MQTTv311)
