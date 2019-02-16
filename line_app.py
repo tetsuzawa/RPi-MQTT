@@ -67,8 +67,8 @@ def handle_message(event):
     except Exception as e:
         print(e)
  
-    #pub04.pub_main()
-    pub04.pub_test02(event.message.text)
+    #pub_line.pub_main()
+    pub_line.pub_test02(event.message.text)
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text)
