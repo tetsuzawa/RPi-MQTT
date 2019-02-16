@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
-from modules import pub04
+from modules import pub_line
 
 from linebot import (
     LineBotApi, WebhookHandler
