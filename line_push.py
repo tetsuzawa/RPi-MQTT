@@ -1,6 +1,13 @@
 from flask import Flask, request, abort
 import numpy as np
 import os
+
+from os.path import join, dirname
+from dotenv import load_dotenv
+
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
 from modules import pub04
 
 from linebot import (
@@ -22,44 +29,17 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
-@app.route("/", methods=['GET', 'POST'])
-def hello_world():
-    return "hello world!"
 
+def line_push():
+    user_id = os.environ["MY_LINE_USER_ID"]
 
-@app.route("/callback", methods=['POST'])
-def callback():
-    # get X-Line-Signature header value
-    signature = request.headers['X-Line-Signature']
+    messages = TextSendMessage(text="Helloooooooo"
+                                   "what's up?????")
 
-    # get request body as text
-    body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+    line_bot_api.push_message(user_id, messages=messages)
 
-    # handle webhook body
-    try:
-        handler.handle(body, signature)
-    except InvalidSignatureError:
-        abort(400)
-
-    return 'OK'
-
-
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    #pub04.pub_main()
-    pub04.pub_test02(event.message.text)
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text)
-    )
-        
 
 
 if __name__ == "__main__":
-#    app.run()
-    app.debug = True
-    #app.run(host='192.168.0.81', port=8080)
-
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    line_push()
+)
