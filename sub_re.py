@@ -5,8 +5,7 @@ import re
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-from modules import led_flash
-from password.password import *
+from modules import led_flash, led_flash_class
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -22,15 +21,20 @@ def on_message(client, userdata, msg):
     message = msg.payload.decode('utf-8')
     #print(msg.topic+' '+str(msg.payload))
     print(msg.topic+' '+message)
+    
+    blue = led_flash_class(COUNT=5, BCM_NUM=13)
+    yellow = led_flash_class(COUNT=5, BCM_NUM=15)
 
     if message == 'on':
         led_flash.flash_yellow()
     if message == 'on':
         led_flash.flash_blue()
     if message == 'yellow':
-        led_flash.flash_yellow()
+        #led_flash.flash_yellow()
+        yellow.flash()
     if message == 'blue':
-        led_flash.flash_blue()
+        #led_flash.flash_blue()
+        blue.flash()
 
 def sub_main():
     client = mqtt.Client(protocol=mqtt.MQTTv311)

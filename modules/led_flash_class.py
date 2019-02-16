@@ -1,25 +1,24 @@
 import RPi.GPIO as GPIO
 import time
 
-class Flash():
-    def ___init__(self, BCM_NUM)
+class Flash:
+    def ___init__(self, COUNT, BCM_NUM):
 
-    COUNT = 5
-    BCM_NUM = 19
-    GPIO.setmode(GPIO.BCM)  #GPIOへアクセスする番号をBCMの番号で指定することを宣言します。                        
-    GPIO.setup(BCM_NUM, GPIO.OUT) #BCMの4番ピン、物理的には10番ピンを出力に設定します。                                
+        self.count = COUNT
+        self.bcm_num = BCM_NUM
+        GPIO.setmode(GPIO.BCM)  #GPIOへアクセスする番号をBCMの番号で指定することを宣言します。                        
+        GPIO.setup(self.count, self.bcm_num) #BCMの4番ピン、物理的には10番ピンを出力に設定します。                                
 
-    def flash(self, BCM_NUM):
-        
+    def flash(self):
 
         try:
-            #while True:
-            for _i in range(1, 11):
-                GPIO.output(BCM_NUM, GPIO.LOW)
+            for _i in range(self.count):
+                GPIO.output(self.bcm_num, GPIO.LOW)
                 time.sleep(0.1)
-                GPIO.output(BCM_NUM, GPIO.HIGH)
+                GPIO.output(self.bcm_num, GPIO.HIGH)
                 time.sleep(0.1)
             GPIO.cleanup()
+
         except KeyboardInterrupt:
             GPIO.cleanup()
 
