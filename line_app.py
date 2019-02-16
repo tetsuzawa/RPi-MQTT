@@ -5,7 +5,7 @@ from modules import pub_line
 
 
 from linebot import (
-    LineBotApi, WebhookHandler
+    LineBotApi, WebhookHandler, exceptions
 )
 from linebot.exceptions import (
     InvalidSignatureError, LineBotApiError
@@ -36,6 +36,7 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: \n" + body)
+    """
     try:
         print(type(body))
         print(str(body))
@@ -44,6 +45,7 @@ def callback():
     except Exception as e:
         print(e)
         pass
+    """
 
     # handle webhook body
     try:
@@ -77,7 +79,7 @@ def handle_message(event):
         else:
             text_message = event.message.text
 
-    except linebot.exceptions.LineBotApiError as e:
+    except exceptions.LineBotApiError as e:
         print("start error handling")
         print(e.status_code)
         print(e.error.message)
