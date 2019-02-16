@@ -23,7 +23,10 @@ def on_message(client, userdata, msg):
     #print(msg.topic+' '+str(msg.payload))
     print(msg.topic+' '+message)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7c690139c7653a28344d95856f4f2d8a70d970ed
     """
     if message == re_compile('on'):
         led_flash.flash()
@@ -35,9 +38,9 @@ def on_message(client, userdata, msg):
         led_flash.flash_blue()
     """
     if message == 'on':
-        led_flash.flash()
-    if message == 'test0':
-        led_flash.flash()
+        led_flash.flash_yellow()
+    if message == 'on':
+        led_flash.flash_blue()
     if message == r'yellow%s\s*':
         led_flash.flash_yellow()
     if message == r'blue%s\s*':
