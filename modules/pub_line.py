@@ -8,8 +8,13 @@ from os.path import join, dirname
 try:
     from dotenv import load_dotenv
 
-    dotenv_path = join(dirname(__file__), '.env')
+    #paths = ('..', '.env')
+    #dotenv_path_a = join(dirname(__file__), '.env')
+    #dotenv_path = join(*paths)
+    dotenv_path = join('..', '.env')
     load_dotenv(dotenv_path)
+    print(dotenv_path)
+    #print(dotenv_path_a)
 except:
     pass
 

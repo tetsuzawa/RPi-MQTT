@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 class Flash:
-    def __init__(self, COUNT, BCM_NUM):
+    def __init__(self, COUNT=10, BCM_NUM=19):
 
         self.count = COUNT
         self.bcm_num = BCM_NUM
@@ -13,17 +13,16 @@ class Flash:
 
         try:
             for _i in range(self.count):
-                GPIO.output(self.bcm_num, GPIO.LOW)
-                time.sleep(0.1)
                 GPIO.output(self.bcm_num, GPIO.HIGH)
                 time.sleep(0.1)
-            GPIO.cleanup()
+                GPIO.output(self.bcm_num, GPIO.LOW)
+                time.sleep(0.1)
 
         except KeyboardInterrupt:
-            GPIO.cleanup()
+            GPIO.output(self.bcm_num, GPIO.LOW)
 
     def __del__(self):
-        GPIO.cleanup()
+        GPIO.cleanup(self.bcm_num)
 
 if __name__ == '__main__':
     flash()
