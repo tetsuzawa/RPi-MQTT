@@ -68,17 +68,21 @@ def handle_message(event):
     except Exception as e:
         print(e)
     """
-    text_message = TextSendMessage(text = "what colors would you like?",
-                                   quick_reply = QuickReply(items = [
-                                       QuickReplyButton(action=MessageAction(label="blue", text="text"))
-                                   ]))
+    if event.message.text == 'gpio':
+        text_message = TextSendMessage(text = "what colors would you like?",
+                                       quick_reply = QuickReply(items = [
+                                           QuickReplyButton(action=MessageAction(label="blue", text="text"))
+                                       ]))
+    else:
+        text_message = event.message.text
  
     #pub_line.pub_main()
     try:
         pub_line.pub_test02(event.message.text)
+            
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=event.message.text)
+            TextSendMessage(text=text_message)
         )
     except Exception as e:
         line_bot_api.reply_message(
