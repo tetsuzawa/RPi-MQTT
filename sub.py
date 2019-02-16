@@ -5,7 +5,7 @@ import re
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-from modules.led_flash_class import Flash
+from modules.led_flash_class import Flash#, FlashAlt
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -20,19 +20,21 @@ def on_message(client, userdata, msg):
     message = msg.payload.decode('utf-8')
     print(msg.topic+' '+message)
     
-    blue = Flash(COUNT=5, BCM_NUM=13)
-    yellow = Flash(COUNT=5, BCM_NUM=19)
+    blue = Flash(BCM_NUM=13)
+    yellow = Flash(BCM_NUM=19)
+    #alt_led = FlashAlt(BCM_NUM=19, BCM_NUM2=13)
 
     if message == 'alternately':
-        yellow.flash()
-        blue.flash()
+        #alt_led.flash_alt(COUNT=10)
+        pass
     if message == 'yellow':
-        yellow.flash()
+        yellow.flash(COUNT=10)
     if message == 'blue':
-        blue.flash()
+        blue.flash(COUNT=10)
 
     del blue
     del yellow
+    #del alt_led
 
 def sub_main():
     client = mqtt.Client(protocol=mqtt.MQTTv311)
