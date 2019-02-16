@@ -7,7 +7,7 @@ class Flash:
         self.count = COUNT
         self.bcm_num = BCM_NUM
         GPIO.setmode(GPIO.BCM)  #GPIOへアクセスする番号をBCMの番号で指定することを宣言します。                        
-        GPIO.setup(self.count, self.bcm_num) #BCMの4番ピン、物理的には10番ピンを出力に設定します。                                
+        GPIO.setup(self.bcm_num, GPIO.OUT) #BCMの4番ピン、物理的には10番ピンを出力に設定します。                                
 
     def flash(self):
 
