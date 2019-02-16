@@ -76,8 +76,18 @@ def handle_message(event):
                                             quick_reply = QuickReply(items = [
                                                 QuickReplyButton(action=MessageAction(label="blue", text="text"))
                                             ]))
+            line_bot_api.reply_message(
+                event.reply_token,
+                text_message
+            )
         else:
             text_message = event.message.text
+            pub_line.pub_test02(text_message)
+
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=text_message)
+            )
 
     except exceptions.LineBotApiError as e:
         print("start error handling")
@@ -87,6 +97,7 @@ def handle_message(event):
         print("end")
  
     #pub_line.pub_main()
+    """
     try:
         pub_line.pub_test02(event.message.text)
             
@@ -99,6 +110,7 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=e)
         )
+    """
         
 
 
