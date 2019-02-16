@@ -74,7 +74,9 @@ def handle_message(event):
         if event.message.text == 'gpio':
             text_message = TextSendMessage(text = "what colors would you like?",
                                             quick_reply = QuickReply(items = [
-                                                QuickReplyButton(action=MessageAction(label="blue", text="text"))
+                                                QuickReplyButton(action=MessageAction(label="blue", text="blue")),
+                                                QuickReplyButton(action=MessageAction(label="yellow", text="yellow"))
+                                                
                                             ]))
             line_bot_api.reply_message(
                 event.reply_token,
