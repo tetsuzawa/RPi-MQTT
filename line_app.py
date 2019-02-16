@@ -62,15 +62,16 @@ def handle_message(event):
     #その他はオウム返し
     try:
         if text_message == 'gpio':
-            send_quick_reply_button()
+            send_object = send_quick_reply_button()
 
         else:
             pub_line.pub_test02(text_message)
+            send_object = TextSendMessage(text=text_message)
 
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=text_message)
-            )
+        line_bot_api.reply_message(
+            event.reply_token,
+            send_object
+        )
 
     except exceptions.LineBotApiError as e:
         print("start error handling")
@@ -82,15 +83,14 @@ def handle_message(event):
 
 #クイックリプライメニューを送信する関数
 def send_quick_reply_button():
+
     quick_reply_content = TextSendMessage(text = "what colors would you like?",
                                     quick_reply = QuickReply(items = [
                                         QuickReplyButton(action=MessageAction(label="blue", text="blue")),
                                         QuickReplyButton(action=MessageAction(label="yellow", text="yellow"))
                                     ]))
-    line_bot_api.reply_message(
-    event.reply_token,
-    quick_reply_content
-    )
+
+    return quick_reply_content
         
 
 
