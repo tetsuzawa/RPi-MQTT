@@ -68,21 +68,13 @@ def handle_message(event):
     except Exception as e:
         print(e)
     """
-    try:
-        if event.message.text == 'gpio':
-            text_message = TextSendMessage(text = "what colors would you like?",
-                                            quick_reply = QuickReply(items = [
-                                                QuickReplyButton(action=MessageAction(label="blue", text="text"))
-                                            ]))
-        else:
-            text_message = event.message.text
-
-    except linebot.exceptions.LineBotApiError as e:
-        print("start error handling")
-        print(e.status_code)
-        print(e.error.message)
-        print(e.error.details)
-        print("end")
+    if event.message.text == 'gpio':
+        text_message = TextSendMessage(text = "what colors would you like?",
+                                       quick_reply = QuickReply(items = [
+                                           QuickReplyButton(action=MessageAction(label="blue", text="text"))
+                                       ]))
+    else:
+        text_message = event.message.text
  
     #pub_line.pub_main()
     try:
