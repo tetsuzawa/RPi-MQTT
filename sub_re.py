@@ -23,23 +23,13 @@ def on_message(client, userdata, msg):
     #print(msg.topic+' '+str(msg.payload))
     print(msg.topic+' '+message)
 
-    """
-    if message == re_compile('on'):
-        led_flash.flash()
-    if message == re_compile('test0'):
-        led_flash.flash()
-    if message == re_compile('yellow'):
-        led_flash.flash_yellow()
-    if message == re_compile('blue'):
-        led_flash.flash_blue()
-    """
     if message == 'on':
         led_flash.flash_yellow()
     if message == 'on':
         led_flash.flash_blue()
-    if message == r'yellow\S*\s*':
+    if message == 'yellow':
         led_flash.flash_yellow()
-    if message == r'blue%s\S*\s*':
+    if message == 'blue':
         led_flash.flash_blue()
 
 def sub_main():
@@ -52,9 +42,6 @@ def sub_main():
     client.connect(os.environ["CLOUD_MQTT_URL"], int(os.environ["CLOUD_MQTT_SSL_PORT"]), keepalive=60)
     client.loop_forever()
 
-def re_compile(text):
-    text = re.compile(r'%s\s*'%text, re.I)
-    return text
 
 if __name__ == '__main__':
     sub_main()
