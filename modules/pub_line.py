@@ -8,13 +8,9 @@ from os.path import join, dirname
 try:
     from dotenv import load_dotenv
 
-    #paths = ('..', '.env')
-    #dotenv_path_a = join(dirname(__file__), '.env')
-    #dotenv_path = join(*paths)
-    dotenv_path = join('..', '.env')
+    dotenv_path_a = join(dirname(__file__), '.env')
     load_dotenv(dotenv_path)
-    print(dotenv_path)
-    #print(dotenv_path_a)
+
 except:
     pass
 
@@ -32,9 +28,6 @@ def pub_test():
     topic = str(input('Enter topic --> '))
     message = str(input('Enter message --> '))
     client.publish(topic, message)
-    #for i in range(0,5):
-    #    client.publish('control', 'test' + str(i))
-    #    time.sleep(1)
 
 def pub_test02(line_message):
 
