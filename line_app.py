@@ -81,7 +81,7 @@ def handle_message(event):
  
 
 #クイックリプライメニューを送信する関数
-def send_quick_reply_button()
+def send_quick_reply_button():
     quick_reply_content = TextSendMessage(text = "what colors would you like?",
                                     quick_reply = QuickReply(items = [
                                         QuickReplyButton(action=MessageAction(label="blue", text="blue")),
