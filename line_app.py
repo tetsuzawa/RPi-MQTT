@@ -35,7 +35,7 @@ def callback():
 
     # get request body as text
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+    app.logger.info("Request body: \n" + body)
     try:
         print(type(body))
         print(str(body))
@@ -56,6 +56,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    """
     try:
         print(event)
         print(type(event))
@@ -66,6 +67,11 @@ def handle_message(event):
         print(str(event))
     except Exception as e:
         print(e)
+    """
+    text_message = TextSendMessage(text = "what colors would you like?",
+                                   quick_reply = QuickReply(items = [
+                                       QuickReplyButton(action=MessageAction(label="blue", text="text"))
+                                   ]))
  
     #pub_line.pub_main()
     try:
