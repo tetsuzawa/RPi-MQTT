@@ -1,9 +1,10 @@
 from flask import Flask, request, abort
 import numpy as np
 import os
+#パブリッシャーのインポート
 from modules import pub_line
 
-
+#LINEBotのSDKのインポート
 from linebot import (
     LineBotApi, WebhookHandler, exceptions
 )
@@ -14,6 +15,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, QuickReplyButton, QuickReply, MessageAction 
 )
 
+#Flaskのインスタンスの作成
 app = Flask(__name__)
 
 #環境変数取得
@@ -23,11 +25,14 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
+#動作確認用ウェブサイトのルーティング
+#アクセスすると hello world! を表示
 @app.route("/", methods=['GET', 'POST'])
 def hello_world():
     return "hello world!"
 
 
+#LINEからのWebhookを処理
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -36,16 +41,6 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: \n" + body)
-    """
-    try:
-        print(type(body))
-        print(str(body))
-        print(body)
-
-    except Exception as e:
-        print(e)
-        pass
-    """
 
     # handle webhook body
     try:
@@ -56,34 +51,20 @@ def callback():
     return 'OK'
 
 
+#送られてきたものがテキストメッセージのときの処理
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    """
+    
+    #送られてきたメッセージの中身の取り出し
+    text_message = event.message.text
+
+    #gpioと送られてきた場合, クイックリプライメニューを送信
+    #その他はオウム返し
     try:
-        print(event)
-        print(type(event))
-        print("\n\nevent.message" + str(event.message))
-    except Exception as e:
-        print(e)
-    try:
-        print(str(event))
-    except Exception as e:
-        print(e)
-    """
-    try:
-        if event.message.text == 'gpio':
-            text_message = TextSendMessage(text = "what colors would you like?",
-                                            quick_reply = QuickReply(items = [
-                                                QuickReplyButton(action=MessageAction(label="blue", text="blue")),
-                                                QuickReplyButton(action=MessageAction(label="yellow", text="yellow"))
-                                                
-                                            ]))
-            line_bot_api.reply_message(
-                event.reply_token,
-                text_message
-            )
+        if text_message == 'gpio':
+            send_quick_reply_button()
+
         else:
-            text_message = event.message.text
             pub_line.pub_test02(text_message)
 
             line_bot_api.reply_message(
@@ -98,28 +79,24 @@ def handle_message(event):
         print(e.error.details)
         print("end")
  
-    #pub_line.pub_main()
-    """
-    try:
-        pub_line.pub_test02(event.message.text)
-            
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=text_message)
-        )
-    except Exception as e:
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=e)
-        )
-    """
+
+#クイックリプライメニューを送信する関数
+def send_quick_reply_button()
+    quick_reply_content = TextSendMessage(text = "what colors would you like?",
+                                    quick_reply = QuickReply(items = [
+                                        QuickReplyButton(action=MessageAction(label="blue", text="blue")),
+                                        QuickReplyButton(action=MessageAction(label="yellow", text="yellow"))
+                                    ]))
+    line_bot_api.reply_message(
+    event.reply_token,
+    quick_reply_content
+    )
         
 
 
+#起動
 if __name__ == "__main__":
-#    app.run()
     app.debug = True
-    #app.run(host='192.168.0.81', port=8080)
 
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
