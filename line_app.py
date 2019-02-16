@@ -68,11 +68,17 @@ def handle_message(event):
         print(e)
  
     #pub_line.pub_main()
-    pub_line.pub_test02(event.message.text)
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text)
-    )
+    try:
+        pub_line.pub_test02(event.message.text)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=event.message.text)
+        )
+    except Exception as e:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=e)
+        )
         
 
 

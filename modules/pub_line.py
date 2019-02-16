@@ -4,10 +4,14 @@ import time
 import os, sys
 
 from os.path import join, dirname
-from dotenv import load_dotenv
 
-dotenv_path = join(dirname(__file__), '.env')
-load_dotenv(dotenv_path)
+try:
+    from dotenv import load_dotenv
+
+    dotenv_path = join(dirname(__file__), '.env')
+    load_dotenv(dotenv_path)
+except:
+    pass
 
 
 
