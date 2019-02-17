@@ -61,10 +61,9 @@ def handle_message(event):
     #gpioと送られてきた場合, クイックリプライメニューを送信
     #その他はオウム返し
 
-    gpio = 
 
     try:
-        if text_message.lower() in 'gpio':
+        if text_message.lower() in 'gpio ':
             send_object = send_quick_reply_button()
 
         else:
