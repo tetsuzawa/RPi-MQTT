@@ -87,7 +87,8 @@ def send_quick_reply_button():
     quick_reply_content = TextSendMessage(text = "what colors would you like?",
                                     quick_reply = QuickReply(items = [
                                         QuickReplyButton(action=MessageAction(label="blue", text="blue")),
-                                        QuickReplyButton(action=MessageAction(label="yellow", text="yellow"))
+                                        QuickReplyButton(action=MessageAction(label="yellow", text="yellow")),
+                                        QuickReplyButton(action=MessageAction(label="alternatively", text="alternatively"))
                                     ]))
 
     return quick_reply_content

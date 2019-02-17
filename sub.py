@@ -2,6 +2,7 @@
 import paho.mqtt.client as mqtt
 import os
 import re
+import RPi.GPIO as GPIO
 from os.path import join, dirname
 from dotenv import load_dotenv
 
@@ -20,21 +21,24 @@ def on_message(client, userdata, msg):
     message = msg.payload.decode('utf-8')
     print(msg.topic+' '+message)
     
-    blue = Flash(BCM_NUM=13)
-    yellow = Flash(BCM_NUM=19)
-    #alt_led = FlashAlt(BCM_NUM=19, BCM_NUM2=13)
+    try:
+        blue = Flash(BCM_NUM=13)
+        yellow = Flash(BCM_NUM=19)
+        #alt_led = FlashAlt(BCM_NUM=19, BCM_NUM2=13)
 
-    if message == 'alternately':
-        #alt_led.flash_alt(COUNT=10)
-        pass
-    if message == 'yellow':
-        yellow.flash(COUNT=10)
-    if message == 'blue':
-        blue.flash(COUNT=10)
-
-    del blue
-    del yellow
-    #del alt_led
+        if message == 'alternately':
+            #alt_led.flash_alt(COUNT=10)
+            pass
+        if message == 'yellow':
+            yellow.flash(COUNT=10)
+        if message == 'blue':
+            blue.flash(COUNT=10)
+    except Exception as e:
+        GPIO.cleanup()
+    else:
+        del blue
+        del yellow
+        #del alt_led
 
 def sub_main():
     client = mqtt.Client(protocol=mqtt.MQTTv311)
