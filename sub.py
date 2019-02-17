@@ -7,7 +7,7 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 
 from modules.re_compiler import ReMatch
-from modules.led_flash_class import Flash
+from modules.led_flash import Flash
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
