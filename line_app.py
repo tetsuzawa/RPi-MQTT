@@ -1,7 +1,7 @@
 from flask import Flask, request, abort
 import numpy as np
 import os
-import
+import re
 #パブリッシャーのインポート
 from modules import pub_line
 from modules.re_compiler import ReMatch
