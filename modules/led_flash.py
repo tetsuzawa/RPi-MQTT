@@ -5,13 +5,11 @@ class Flash:
 
     def __init__(self, BCM_NUM=19):
 
-        #self.count = COUNT
         self.bcm_num = BCM_NUM
         GPIO.setmode(GPIO.BCM)  #GPIOへアクセスする番号をBCMの番号で指定することを宣言します。                        
-        GPIO.setup(self.bcm_num, GPIO.OUT) #BCMの4番ピン、物理的には10番ピンを出力に設定します。                                
+        GPIO.setup(self.bcm_num, GPIO.OUT) #BCMの{BCM_NUM}ピンを出力に追加する.j
 
     def flash(self, COUNT):
-        #self.count = COUNT
 
         try:
             for _i in range(COUNT):
@@ -28,5 +26,5 @@ class Flash:
         
 
 if __name__ == '__main__':
-    blue = Flash(GCM_NUM=13)
+    blue = Flash(BCM_NUM=13)
     blue.flash(15)
