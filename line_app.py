@@ -58,21 +58,21 @@ def handle_message(event):
     #送られてきたメッセージの中身の取り出し
     text_message = event.message.text
 
-    #gpioと送られてきた場合, クイックリプライメニューを送信
+    #gpio を含んだメッセージが送られてきた場合, クイックリプライメニューを送信
     #その他はオウム返し
 
 
     try:
-        if text_message.lower() in 'gpio ':
-            send_object = send_quick_reply_button()
+        if 'gpio ' in text_message.lower():
+            sending_object = send_quick_reply_button()
 
         else:
-            pub_line.pub_test02(text_message)
-            send_object = TextSendMessage(text=text_message)
+            pub_line.pub_line_message(text_message)
+            sending_object = TextSendMessage(text=text_message)
 
         line_bot_api.reply_message(
             event.reply_token,
-            send_object
+            sending_object
         )
 
     except exceptions.LineBotApiError as e:

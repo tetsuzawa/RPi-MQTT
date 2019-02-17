@@ -36,6 +36,7 @@ def on_message(client, userdata, msg):
         if 'flash blue' in message.lower():
             blue.flash(COUNT=10)
     except Exception as e:
+        print(e)
         GPIO.cleanup()
     else:
         del blue

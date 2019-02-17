@@ -8,11 +8,11 @@ from os.path import join, dirname
 try:
     from dotenv import load_dotenv
 
-    dotenv_path_a = join(dirname(__file__), '.env')
+    dotenv_path = join(dirname(__file__), '.env')
     load_dotenv(dotenv_path)
 
-except:
-    pass
+except Exception as e:
+    print(e)
 
 
 
@@ -29,7 +29,7 @@ def pub_test():
     message = str(input('Enter message --> '))
     client.publish(topic, message)
 
-def pub_test02(line_message):
+def pub_line_message(line_message):
 
     client.publish('control', line_message)
 
