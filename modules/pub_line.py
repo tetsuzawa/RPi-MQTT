@@ -21,7 +21,7 @@ client.username_pw_set(os.environ["CLOUD_MQTT_USERNAME"], os.environ["CLOUD_MQTT
 client.connect(os.environ["CLOUD_MQTT_URL"], int(os.environ["CLOUD_MQTT_SSL_PORT"]), keepalive=60)
 
 
-def pub_test():
+def pub_main():
     
     topic = str(input('Enter topic --> '))
     message = str(input('Enter message --> '))
@@ -31,10 +31,10 @@ def pub_line_message(line_message):
 
     client.publish('control', line_message)
 
-def pub_main():
-
-    pub_test()
+def pub_web(http_post_message):
+    
+    client.publish('control', http_post_message)
  
 #client.loop_start()
 if __name__ == "__main__":
-    pub_test()
+    pub_main()

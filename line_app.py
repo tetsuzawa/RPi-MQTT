@@ -1,12 +1,21 @@
-from flask import Flask, request, abort
+from flask import Flask, request, render_template, abort
 import numpy as np
 import os
+from os.path import join, dirname
 import re
 
 #LINEBotのSDKのインポート
 from linebot import LineBotApi, WebhookHandler, exceptions
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, QuickReplyButton, QuickReply, MessageAction
+
+#local実行時に環境変数を読み込む(herokuのときは無視される)
+try:
+    from dotenv import load_dotenv
+    dotenv_path = join(dirname(__file__), '.env')
+    load_dotenv(dotenv_path)
+except Exception as e:
+    print(e)
 
 #自作パブリッシャーのインポート
 from modules import pub_line
@@ -15,10 +24,9 @@ from modules.re_compiler import ReMatch
 #Flaskのインスタンスの作成
 app = Flask(__name__)
 
-#環境変数取得
+#環境変数取得とLINEの初期設定
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
-
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
@@ -26,7 +34,23 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 #アクセスすると hello world! を表示
 @app.route("/", methods=['GET', 'POST'])
 def hello_world():
-    return "hello world!"
+    return render_template("index.html")
+
+#webのhttpメソッドからパブリッシュ
+@app.route("/flash", methods=['GET', 'POST'])
+def pub_web():
+    if request.method == 'POST':
+        res = request.form['post_value']
+        res_message = 'You published this message to Raspberry Pi: '
+        pub_line.pub_web(res)
+        return render_template('flash_button.html') + res_message + res
+
+    elif request.method == 'GET':
+        return 'Hello World!\n' + render_template('flash_button.html')
+
+    else:
+        return abort(405)
+
 
 
 #LINEからのWebhookを処理
@@ -48,7 +72,7 @@ def callback():
     return 'OK'
 
 
-#送られてきたものがテキストメッセージのときの処理
+#送られてきたものがテキストメッセージのときパブリッシュ
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     
@@ -101,5 +125,6 @@ def send_quick_reply_button():
 if __name__ == "__main__":
     #デバッグをする際はコメントアウトを外す
     #app.debug = True
+    #app.run(host='192.168.0.81', port=8080)
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
