@@ -1,8 +1,8 @@
 #coding: utf-8
 import paho.mqtt.client as mqtt
 import time
-import os, sys
-
+import os
+import sys
 from os.path import join, dirname
 
 try:
@@ -15,12 +15,10 @@ except Exception as e:
     print(e)
 
 
-
 client = mqtt.Client(protocol=mqtt.MQTTv311)
 client.tls_set('/etc/ssl/certs/ca-certificates.crt')
 client.username_pw_set(os.environ["CLOUD_MQTT_USERNAME"], os.environ["CLOUD_MQTT_PASSWORD"])
 client.connect(os.environ["CLOUD_MQTT_URL"], int(os.environ["CLOUD_MQTT_SSL_PORT"]), keepalive=60)
-
 
 
 def pub_test():

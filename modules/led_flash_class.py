@@ -11,10 +11,10 @@ class Flash:
         GPIO.setup(self.bcm_num, GPIO.OUT) #BCMの4番ピン、物理的には10番ピンを出力に設定します。                                
 
     def flash(self, COUNT):
-        self.count = COUNT
+        #self.count = COUNT
 
         try:
-            for _i in range(self.count):
+            for _i in range(COUNT):
                 GPIO.output(self.bcm_num, GPIO.HIGH)
                 time.sleep(0.1)
                 GPIO.output(self.bcm_num, GPIO.LOW)
@@ -26,36 +26,7 @@ class Flash:
     def __del__(self):
         GPIO.cleanup(self.bcm_num)
         
-"""
-class FlashAlt(Flash):
-
-    def __init__(self, BCM_NUM=19, BCM_NUM2=13):
-
-        super().__init__(self, BCM_NUM=19)
-        self.bcm_num2 = BCM_NUM2
-        GPIO.setup(self.bcm_num2, GPIO.OUT)
-
-    def flash_alt(self, COUNT):
-
-        try:
-            for _i in range(round(COUNT)):
-                GPIO.output(self.bcm_num2, GPIO.LOW)
-                GPIO.output(self.bcm_num, GPIO.HIGH)
-                time.sleep(0.1)
-                GPIO.output(self.bcm_num, GPIO.LOW)
-                GPIO.output(self.bcm_num2, GPIO.HIGH)
-                time.sleep(0.1)
-
-        except KeyboardInterrupt:
-            GPIO.output(self.bcm_num, GPIO.LOW)
-            GPIO.output(self.bcm_num2, GPIO.LOW)
-
-    def __del__(self):
-        super().__del__(self)
-        GPIO.cleanup(self.bcm_num2)
-
-"""
-
 
 if __name__ == '__main__':
-    flash()
+    blue = Flash(GCM_NUM=13)
+    blue.flash(15)

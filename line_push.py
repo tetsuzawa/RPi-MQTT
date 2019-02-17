@@ -1,4 +1,3 @@
-from flask import Flask, request, abort
 import numpy as np
 import os
 
@@ -10,17 +9,11 @@ load_dotenv(dotenv_path)
 
 from modules import pub_line
 
-from linebot import (
-    LineBotApi, WebhookHandler
-)
-from linebot.exceptions import (
-    InvalidSignatureError
-)
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
-)
+from linebot import LineBotApi, WebhookHandler
+from linebot.exceptions import InvalidSignatureError
+from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
-app = Flask(__name__)
+
 
 #環境変数取得
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
@@ -42,4 +35,4 @@ def line_push():
 
 if __name__ == "__main__":
     line_push()
-)
+

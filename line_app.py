@@ -2,19 +2,15 @@ from flask import Flask, request, abort
 import numpy as np
 import os
 import re
-#パブリッシャーのインポート
+
+#LINEBotのSDKのインポート
+from linebot import LineBotApi, WebhookHandler
+from linebot.exceptions import InvalidSignatureError
+from linebot.models import MessageEvent, TextMessage, TextSendMessage
+
+#自作パブリッシャーのインポート
 from modules import pub_line
 from modules.re_compiler import ReMatch
-#LINEBotのSDKのインポート
-from linebot import (
-    LineBotApi, WebhookHandler, exceptions
-)
-from linebot.exceptions import (
-    InvalidSignatureError, LineBotApiError
-)
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, QuickReplyButton, QuickReply, MessageAction 
-)
 
 #Flaskのインスタンスの作成
 app = Flask(__name__)
@@ -65,11 +61,9 @@ def handle_message(event):
 
     try:
         if gpio.match:
-            print("gpiodayoyyyoyy")
             sending_object = send_quick_reply_button()
 
         else:
-            print("okeoke")
             pub_line.pub_line_message(text_message)
             sending_object = TextSendMessage(text=text_message)
 
@@ -79,7 +73,7 @@ def handle_message(event):
         )
 
     except exceptions.LineBotApiError as e:
-        print("start error handling")
+        print("start line error handling")
         print(e.status_code)
         print(e.error.message)
         print(e.error.details)
@@ -96,7 +90,7 @@ def send_quick_reply_button():
                                         quick_reply = QuickReply(items = [
                                             QuickReplyButton(action=MessageAction(label="blue", text="Flash blue")),
                                             QuickReplyButton(action=MessageAction(label="yellow", text="Flash yellow")),
-                                            QuickReplyButton(action=MessageAction(label="alternately", text="Flash alternately"))
+                                            QuickReplyButton(action=MessageAction(label="both", text="Flash both of blue and yellow"))
                                         ]))
 
     return quick_reply_content
@@ -105,7 +99,7 @@ def send_quick_reply_button():
 
 #起動
 if __name__ == "__main__":
-    app.debug = True
-
+    #デバッグをする際はコメントアウトを外す
+    #app.debug = True
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)

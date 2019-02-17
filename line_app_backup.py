@@ -1,19 +1,16 @@
 from flask import Flask, request, abort
 import numpy as np
 import os
-#パブリッシャーのインポート
-from modules import pub_line
+import re
 
 #LINEBotのSDKのインポート
-from linebot import (
-    LineBotApi, WebhookHandler, exceptions
-)
-from linebot.exceptions import (
-    InvalidSignatureError, LineBotApiError
-)
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, QuickReplyButton, QuickReply, MessageAction 
-)
+from linebot import LineBotApi, WebhookHandler
+from linebot.exceptions import InvalidSignatureError
+from linebot.models import MessageEvent, TextMessage, TextSendMessage
+
+#自作パブリッシャーのインポート
+from modules import pub_line
+from modules.re_compiler import ReMatch
 
 #Flaskのインスタンスの作成
 app = Flask(__name__)
@@ -58,37 +55,43 @@ def handle_message(event):
     #送られてきたメッセージの中身の取り出し
     text_message = event.message.text
 
-    #gpioと送られてきた場合, クイックリプライメニューを送信
+    #gpio を含んだメッセージが送られてきた場合, クイックリプライメニューを送信
     #その他はオウム返し
+    gpio = ReMatch(text_message, 'gpio')
+
     try:
-        if text_message == 'gpio':
-            send_object = send_quick_reply_button()
+        if gpio.match:
+            sending_object = send_quick_reply_button()
 
         else:
-            pub_line.pub_test02(text_message)
-            send_object = TextSendMessage(text=text_message)
+            pub_line.pub_line_message(text_message)
+            sending_object = TextSendMessage(text=text_message)
 
         line_bot_api.reply_message(
             event.reply_token,
-            send_object
+            sending_object
         )
 
     except exceptions.LineBotApiError as e:
-        print("start error handling")
+        print("start line error handling")
         print(e.status_code)
         print(e.error.message)
         print(e.error.details)
         print("end")
+
+    except Exception as e:
+        print(e)
  
 
 #クイックリプライメニューを送信する関数
 def send_quick_reply_button():
 
     quick_reply_content = TextSendMessage(text = "what colors would you like?",
-                                    quick_reply = QuickReply(items = [
-                                        QuickReplyButton(action=MessageAction(label="blue", text="blue")),
-                                        QuickReplyButton(action=MessageAction(label="yellow", text="yellow"))
-                                    ]))
+                                        quick_reply = QuickReply(items = [
+                                            QuickReplyButton(action=MessageAction(label="blue", text="Flash blue")),
+                                            QuickReplyButton(action=MessageAction(label="yellow", text="Flash yellow")),
+                                            QuickReplyButton(action=MessageAction(label="both", text="Flash both of blue and yellow"))
+                                        ]))
 
     return quick_reply_content
         
@@ -96,7 +99,7 @@ def send_quick_reply_button():
 
 #起動
 if __name__ == "__main__":
-    app.debug = True
-
+    #デバッグをする際はコメントアウトを外す
+    #app.debug = True
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)

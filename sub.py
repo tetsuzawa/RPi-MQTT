@@ -6,7 +6,8 @@ import RPi.GPIO as GPIO
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-from modules.led_flash_class import Flash#, FlashAlt
+from modules.re_compiler import ReMatch
+from modules.led_flash_class import Flash
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -24,10 +25,8 @@ def on_message(client, userdata, msg):
     try:
         blue = Flash(BCM_NUM=13)
         yellow = Flash(BCM_NUM=19)
-        #alt_led = FlashAlt(BCM_NUM=19, BCM_NUM2=13)
 
-        if 'flash alternately' in message.lower():
-            #alt_led.flash_alt(COUNT=10)
+        if 'flash both of blue and yellow' in message.lower():
             for _j in range(5):
                 yellow.flash(COUNT=1)
                 blue.flash(COUNT=1)
@@ -41,7 +40,6 @@ def on_message(client, userdata, msg):
     else:
         del blue
         del yellow
-        #del alt_led
 
 def sub_main():
     client = mqtt.Client(protocol=mqtt.MQTTv311)
