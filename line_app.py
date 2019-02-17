@@ -82,6 +82,9 @@ def handle_message(event):
         print(e.error.message)
         print(e.error.details)
         print("end")
+
+    except Exception as e:
+        print(e)
  
 
 #クイックリプライメニューを送信する関数
