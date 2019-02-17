@@ -31,9 +31,9 @@ def on_message(client, userdata, msg):
             for _j in range(5):
                 yellow.flash(COUNT=1)
                 blue.flash(COUNT=1)
-        if message == 'flash yellow':
+        if message.lower() == 'flash yellow':
             yellow.flash(COUNT=10)
-        if message == 'flash blue':
+        if message.lower() == 'flash blue':
             blue.flash(COUNT=10)
     except Exception as e:
         GPIO.cleanup()
