@@ -90,7 +90,7 @@ def send_quick_reply_button():
                                         quick_reply = QuickReply(items = [
                                             QuickReplyButton(action=MessageAction(label="blue", text="Flash blue")),
                                             QuickReplyButton(action=MessageAction(label="yellow", text="Flash yellow")),
-                                            QuickReplyButton(action=MessageAction(label="alternatively", text="Flash alternately"))
+                                            QuickReplyButton(action=MessageAction(label="alternately", text="Flash alternately"))
                                         ]))
 
     return quick_reply_content
