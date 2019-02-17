@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 import numpy as np
 import os
+import
 #パブリッシャーのインポート
 from modules import pub_line
 from modules.re_compiler import ReMatch
@@ -63,7 +64,7 @@ def handle_message(event):
 
 
     try:
-        if 'gpio ' in text_message.lower():
+        if r'gpio\s?' in text_message.lower():
             sending_object = send_quick_reply_button()
 
         else:
