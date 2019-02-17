@@ -65,11 +65,11 @@ def handle_message(event):
 
     try:
         if gpio.match:
-            print(gpiodayoyyyoyy)
+            print("gpiodayoyyyoyy")
             sending_object = send_quick_reply_button()
 
         else:
-            print(okeoke)
+            print("okeoke")
             pub_line.pub_line_message(text_message)
             sending_object = TextSendMessage(text=text_message)
 
