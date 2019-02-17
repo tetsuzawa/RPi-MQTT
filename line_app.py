@@ -61,10 +61,10 @@ def handle_message(event):
 
     #gpio を含んだメッセージが送られてきた場合, クイックリプライメニューを送信
     #その他はオウム返し
-
+    gpio = ReMatch(text_message, 'gpio')
 
     try:
-        if r'gpio\s?' in text_message.lower():
+        if gpio.match:
             sending_object = send_quick_reply_button()
 
         else:
