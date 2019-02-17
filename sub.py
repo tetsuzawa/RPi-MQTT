@@ -26,12 +26,14 @@ def on_message(client, userdata, msg):
         yellow = Flash(BCM_NUM=19)
         #alt_led = FlashAlt(BCM_NUM=19, BCM_NUM2=13)
 
-        if message == 'alternately':
+        if message.lower() in 'flash alternately':
             #alt_led.flash_alt(COUNT=10)
-            pass
-        if message == 'yellow':
+            for _j in range(5):
+                yellow.flash(COUNT=1)
+                blue.flash(COUNT=1)
+        if message == 'flash yellow':
             yellow.flash(COUNT=10)
-        if message == 'blue':
+        if message == 'flash blue':
             blue.flash(COUNT=10)
     except Exception as e:
         GPIO.cleanup()

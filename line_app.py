@@ -3,7 +3,7 @@ import numpy as np
 import os
 #パブリッシャーのインポート
 from modules import pub_line
-
+from modules.re_compiler import ReMatch
 #LINEBotのSDKのインポート
 from linebot import (
     LineBotApi, WebhookHandler, exceptions
@@ -60,8 +60,11 @@ def handle_message(event):
 
     #gpioと送られてきた場合, クイックリプライメニューを送信
     #その他はオウム返し
+
+    gpio = 
+
     try:
-        if text_message == 'gpio':
+        if text_message.lower() in 'gpio':
             send_object = send_quick_reply_button()
 
         else:
@@ -85,11 +88,11 @@ def handle_message(event):
 def send_quick_reply_button():
 
     quick_reply_content = TextSendMessage(text = "what colors would you like?",
-                                    quick_reply = QuickReply(items = [
-                                        QuickReplyButton(action=MessageAction(label="blue", text="blue")),
-                                        QuickReplyButton(action=MessageAction(label="yellow", text="yellow")),
-                                        QuickReplyButton(action=MessageAction(label="alternatively", text="alternatively"))
-                                    ]))
+                                        quick_reply = QuickReply(items = [
+                                            QuickReplyButton(action=MessageAction(label="blue", text="Flash blue")),
+                                            QuickReplyButton(action=MessageAction(label="yellow", text="Flash yellow")),
+                                            QuickReplyButton(action=MessageAction(label="alternatively", text="Flash alternatively"))
+                                        ]))
 
     return quick_reply_content
         
