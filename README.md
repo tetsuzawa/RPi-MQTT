@@ -1,10 +1,10 @@
 # LINE or WEBサイトからRaspbeery PiのGPIOを操作
 
 ## プログラム構成
-- line_app.py : メインのFlaskアプリ. herokuにデプロイ.  
+- line_app.py : メインのFlaskアプリ. herokuにデプロイ.
+- sub.py : パブリッシュされたメッセージを受け取る. ラズパイ上で実行.
 - modules/re_compiler.py LINEのメッセージを加工. herokuで実行
 - modules/pub_line.py : LINEのメッセージをパブリッシュ. herokuで実行.  
-- sub.py : パブリッシュされたメッセージを受け取る. ラズパイ上で実行.  
 - modules/led_flash.py : GPIOを操作.
 - template/index.html : herokuのルートページ(/)にアクセスした際にレンダリングされるファイル.
 - template/flash_button.html : herokuのGPIO操作ページ(/flash)にアクセスした際にレンダリングされるファイル.
