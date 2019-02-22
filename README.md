@@ -14,6 +14,7 @@
 - flask
 - RPi.GPIO
 - re (正規表現)
+- mosquito
 ### その他
 - git
 - heroku
